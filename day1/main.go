@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -14,27 +15,35 @@ func main() {
 		log.Fatal(err)
 	}
 	defer file.Close()
-	max := 0
+
+	var max []int
 	elfCalo := 0
 
 	scanner := bufio.NewScanner(file)
-	// optionally, resize scanner's capacity for lines over 64K, see next example
+
 	for scanner.Scan() {
 		line := scanner.Text()
 
 		if line == "" {
-			if max < elfCalo {
-				max = elfCalo
-			}
+			max = append(max, elfCalo)
 			elfCalo = 0
 		} else {
 			calo, _ := strconv.Atoi(line)
 			elfCalo += calo
 		}
-
 	}
 
-	fmt.Println(max)
+	sort.Slice(max, func(i, j int) bool {
+		return max[i] > max[j]
+	})
+
+	sum := 0
+
+	for i := 0; i < 3; i++ {
+		sum += max[i]
+	}
+
+	fmt.Println(sum)
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
