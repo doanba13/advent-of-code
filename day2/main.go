@@ -9,27 +9,25 @@ import (
 )
 
 func getScore(first, last string, d map[string](int)) int {
-	c := d[last] - d[first]
-
-	fmt.Printf("%s - %s = %d \n", last, first, c)
-
-	if c == 1 {
-		return d[last] + 6
+	if last == "X" {
+		score := d[first] - 1
+		if score == 0 {
+			return 3
+		}
+		return score
 	}
 
-	if c == 0 {
-		return d[last] + 3
+	if last == "Y" {
+		return d[first] + 3
 	}
 
-	if c == -2 {
-		return d[last] + 6
-	}
+	fmt.Printf("%s - %s \n", last, first)
 
-	if c == 2 {
-		return d[last]
+	score := d[first] + 1
+	if score == 4 {
+		return 6 + 1
 	}
-
-	return d[last]
+	return score + 6
 }
 
 func main() {
@@ -41,13 +39,13 @@ func main() {
 
 	dics := make(map[string](int))
 
-	dics["A"] = 1
-	dics["B"] = 2
-	dics["C"] = 3
+	dics["A"] = 1 // Rock
+	dics["B"] = 2 // Paper
+	dics["C"] = 3 // Scissor
 
 	dics["X"] = 1
-	dics["Y"] = 2
-	dics["Z"] = 3
+	dics["Y"] = 4
+	dics["Z"] = 7
 
 	totalScore := 0
 
