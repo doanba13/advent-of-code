@@ -36,7 +36,7 @@ func main() {
 		e2Start, _ := strconv.Atoi(e2[0])
 		e2Stop, _ := strconv.Atoi(e2[1])
 
-		if (e1Start <= e2Start && e1Stop >= e2Stop) || (e1Start >= e2Start && e1Stop <= e2Stop) {
+		if (e1Start <= e2Start && e1Stop >= e2Stop) || (e1Start >= e2Start && e1Stop <= e2Stop) || (e1Start < e2Stop && e1Stop >= e2Start) || (e2Start < e1Stop && e2Stop >= e1Start) {
 			containRangeCount++
 		}
 	}
